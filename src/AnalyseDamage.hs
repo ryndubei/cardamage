@@ -20,6 +20,7 @@ type ApiKey = ByteString
 
 -- | Given a list of images, output a list of damaged car parts according
 -- to the image classification model.
+-- Format: "car_part damage_category cost"
 -- Also outputs "Total cost: [SUM]"
 analyseImages :: ApiKey -> [Image] -> IO [String]
 analyseImages apiKey imgs = do
