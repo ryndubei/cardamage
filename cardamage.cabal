@@ -20,6 +20,8 @@ extra-source-files:
     CHANGELOG.md
 data-files:
     .secrets/API_KEY.secret
+    partcost.csv
+    damage-multipliers.csv
 
 source-repository head
   type: git
@@ -44,6 +46,7 @@ library
     , containers
     , http-conduit
     , text
+    , vector
   default-language: Haskell2010
 
 executable car-exe
@@ -65,6 +68,7 @@ executable car-exe
     , http-conduit
     , optparse-applicative
     , text
+    , vector
   default-language: Haskell2010
 
 test-suite car-test
@@ -86,4 +90,5 @@ test-suite car-test
     , containers
     , http-conduit
     , text
+    , vector
   default-language: Haskell2010

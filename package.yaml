@@ -12,6 +12,8 @@ extra-source-files:
 
 data-files:
 - .secrets/*.secret
+- partcost.csv
+- damage-multipliers.csv
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -30,6 +32,7 @@ dependencies:
 - aeson
 - text
 - base64
+- vector
 
 ghc-options:
 - -Wall
