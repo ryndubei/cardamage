@@ -1,0 +1,77 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.35.1.
+--
+-- see: https://github.com/sol/hpack
+
+name:           cardamage
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/ryndubei/car#readme>
+homepage:       https://github.com/ryndubei/car#readme
+bug-reports:    https://github.com/ryndubei/car/issues
+author:         ryndubei
+maintainer:     114586905+ryndubei@users.noreply.github.com
+copyright:      2023 ryndubei
+license:        GPL-3.0-or-later
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+data-files:
+    .secrets/API_KEY.secret
+
+source-repository head
+  type: git
+  location: https://github.com/ryndubei/car
+
+library
+  exposed-modules:
+      AnalyseDamage
+  other-modules:
+      Paths_cardamage
+  autogen-modules:
+      Paths_cardamage
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , containers
+  default-language: Haskell2010
+
+executable car-exe
+  main-is: Main.hs
+  other-modules:
+      CommandLine
+      Paths_cardamage
+  autogen-modules:
+      Paths_cardamage
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , cardamage
+    , containers
+    , optparse-applicative
+  default-language: Haskell2010
+
+test-suite car-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_cardamage
+  autogen-modules:
+      Paths_cardamage
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , bytestring
+    , cardamage
+    , containers
+  default-language: Haskell2010
