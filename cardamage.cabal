@@ -28,6 +28,7 @@ source-repository head
 library
   exposed-modules:
       AnalyseDamage
+      AnalyseDamage.ApiResponse
   other-modules:
       Paths_cardamage
   autogen-modules:
@@ -36,15 +37,18 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , base64
     , bytestring
     , containers
+    , http-conduit
+    , text
   default-language: Haskell2010
 
 executable car-exe
   main-is: Main.hs
   other-modules:
-      CommandLine
       Paths_cardamage
   autogen-modules:
       Paths_cardamage
@@ -52,11 +56,15 @@ executable car-exe
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , base64
     , bytestring
     , cardamage
     , containers
+    , http-conduit
     , optparse-applicative
+    , text
   default-language: Haskell2010
 
 test-suite car-test
@@ -70,8 +78,12 @@ test-suite car-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , base64
     , bytestring
     , cardamage
     , containers
+    , http-conduit
+    , text
   default-language: Haskell2010
