@@ -1,8 +1,10 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
 module AnalyseDamage.ApiResponse (ApiOutput, displayApiOutput) where
 
 import GHC.Generics (Generic)
-import Data.Aeson ( ToJSON (toEncoding), genericToEncoding, defaultOptions, FromJSON )
+import Data.Aeson ( FromJSON, withObject, (.:) )
+import Data.Aeson.Types (parseJSON)
 
 data ApiOutput = ApiOutput
   { job_id :: String
@@ -10,14 +12,18 @@ data ApiOutput = ApiOutput
   , output :: Output
   } deriving (Generic, Show)
 
-data Output = Output 
+instance FromJSON ApiOutput
+
+data Output = Output
   { elements :: [Element]
 
--- Commented out because draw_result is False and so these fields don't exist:
+-- Commented out because draw_result is False so these fields don't exist:
 --, output_url :: String
 --, url_expiry :: String
 
   } deriving (Generic, Show)
+
+instance FromJSON Output
 
 data Element = Element
   { bbox :: [Int]
@@ -25,27 +31,21 @@ data Element = Element
   , damage_color :: [Int]
   , damage_id :: String
   , damage_location :: String
-  , score :: String
+  , score :: Double
   } deriving (Generic, Show)
 
-instance ToJSON ApiOutput where
-  toEncoding = genericToEncoding defaultOptions
-
-instance FromJSON ApiOutput
-
-instance ToJSON Element where
-  toEncoding = genericToEncoding defaultOptions
-
-instance FromJSON Element
-
-instance ToJSON Output where
-  toEncoding = genericToEncoding defaultOptions
-
-instance FromJSON Output
+instance FromJSON Element where
+  parseJSON = withObject "elements" $ \v -> Element
+    <$> (v .: "bbox")
+    <*> (v .: "damage_category")
+    <*> (v .: "damage_color")
+    <*> (v .: "damage_id")
+    <*> (v .: "damage_location")
+    <*> (v .: "score") 
 
 -- | List of tuples containing names of car parts and their damage types.
 displayApiOutput :: ApiOutput -> [(String, String)]
-displayApiOutput apiOutput = 
+displayApiOutput apiOutput =
   let
     outputElements = elements . output $ apiOutput
-   in [ (damage_category e, damage_category e) | e <- outputElements ]
+   in [ (damage_location e, damage_category e) | e <- outputElements ]

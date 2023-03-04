@@ -20,6 +20,7 @@ type ApiKey = ByteString
 analyseImages :: ApiKey -> [Image] -> IO [String]
 analyseImages apiKey imgs = do
   rawOutputs <- mapM (runModel apiKey) imgs
+  let damages = map displayApiOutput rawOutputs
   pure (map (show . displayApiOutput) rawOutputs)
 
 runModel :: ApiKey -> Image -> IO ApiOutput
