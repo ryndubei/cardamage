@@ -13,4 +13,4 @@ analyseImages imgs = mapM runModel imgs >>= \outputs ->
 type Confidence = Double
 
 runModel :: Image -> IO [(String, Confidence)]
-runModel img = undefined
+runModel img = pure [("Windshield", 0.9), ("Door", 0.2), ("Lights", 0.6)]
