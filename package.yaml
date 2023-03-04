@@ -32,6 +32,7 @@ dependencies:
 - aeson
 - text
 - base64
+- cassava
 - vector
 
 ghc-options:

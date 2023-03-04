@@ -31,6 +31,7 @@ library
   exposed-modules:
       AnalyseDamage
       AnalyseDamage.ApiResponse
+      ParseCsv
   other-modules:
       Paths_cardamage
   autogen-modules:
@@ -43,6 +44,7 @@ library
     , base >=4.7 && <5
     , base64
     , bytestring
+    , cassava
     , containers
     , http-conduit
     , text
@@ -64,6 +66,7 @@ executable car-exe
     , base64
     , bytestring
     , cardamage
+    , cassava
     , containers
     , http-conduit
     , optparse-applicative
@@ -87,6 +90,7 @@ test-suite car-test
     , base64
     , bytestring
     , cardamage
+    , cassava
     , containers
     , http-conduit
     , text
