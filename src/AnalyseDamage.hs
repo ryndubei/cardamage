@@ -14,6 +14,7 @@ import AnalyseDamage.ApiResponse (ApiOutput, displayApiOutput)
 import ParseCsv (getPartCosts, getMultipliers)
 import qualified Data.Map.Strict as M
 import Control.Applicative (liftA2)
+import Control.Concurrent (threadDelay)
 
 type Image = ByteString
 type ApiKey = ByteString
@@ -24,7 +25,7 @@ type ApiKey = ByteString
 -- Also outputs "Total cost: [SUM]"
 analyseImages :: ApiKey -> [Image] -> IO [String]
 analyseImages apiKey imgs = do
-  rawOutputs <- mapM (runModel apiKey) imgs
+  rawOutputs <- mapM (\img -> threadDelay (round 0.5*10^6) >> runModel apiKey img) imgs
   let damages = concatMap displayApiOutput rawOutputs
   partMap <- getPartCosts
   multiplierMap <- getMultipliers
