@@ -4,6 +4,7 @@ import os
 from PIL import ImageTk,Image
 import requests
 import subprocess
+import sys 
 
 
 root = Tk()
@@ -45,12 +46,13 @@ def call_api(output_label):
     print(output)
     should_make_api_request = False
     output_utf8 = output.decode("utf-8")
-    output_label.config(text=output_utf8)
+    output_better = output_utf8.replace(" ", "   ").replace("_"," ")
+    output_label.configure(text=output_better, anchor = "w", font=("Calibri", 15, "bold"))
+    
 
 
-# TODO: fix move page functions: it's very easy to click around and end up with
 # an index out of bounds
-def move_next_page(pages):
+def next_page(pages):
     global count
 
     if not count > len(pages)-2:
@@ -59,22 +61,21 @@ def move_next_page(pages):
 
     count += 1
     # counts how many pages
-    if count < 4:
+    if count < len(pages):
         page = pages[count]
         page.pack(pady=100)
 
 
-def move_back_page(pages):
+def back_page(pages):
     global count
 
     if not count == 0:
-
         for p in pages:
             p.pack_forget()
 
     count -= 1
     # counts how many pages
-    if count > -1:
+    if count >= 0:
         page = pages[count]
         page.pack(pady=100)
 
@@ -99,7 +100,7 @@ root.resizable(0,0)
 
 #welcome page 
 page_1 = Frame(main_frame)
-page_1_lb = Label(page_1, text='Welcome to remote Car service estimator', font=('Bold', 20),background = "yellow", borderwidth=3, relief="groove")
+page_1_lb = Label(page_1, text='Welcome to remote Car service estimator', font=('Bold', 20),background = "yellow", borderwidth=3, relief= GROOVE)
 page_1_lb.pack()
 
 welcome_tk_image = ImageTk.PhotoImage(welcome_image)
@@ -110,7 +111,7 @@ page_1.pack(pady = 100)
 #page to get output from haskell
 # Note that this is defined before page_2 because we later modify page_3_l2 via page_2_l2
 page_3 = Frame(main_frame)
-page_3_l1 = Label(page_3, text='Output', font=('Bold', 20))
+page_3_l1 = Label(page_3, text='Our analysis', font=('Bold', 20))
 page_3_l1.pack()
 
 page_3_l2 = Label(page_3, text = "", font = ("Bold",15 ) )
@@ -118,23 +119,24 @@ page_3_l2.pack()
 
 #page to add inputs
 page_2 = Frame(main_frame)
-page_2_l1 = Label(page_2, text='Analysis phase', font=('Bold', 20),background = "cyan", borderwidth = 7, relief  = "ridge")
+page_2_l1 = Label(page_2, text='Analysis phase', font=('Bold', 20),background = "cyan", borderwidth = 7, relief  = RIDGE)
 page_2_l1.pack(padx = 100, pady = 25)
 page_2_l2 = Button(page_2, text="Input pictures", width=10, command=lambda: get_photos(page_3_l2))
 page_2_l2.pack()
-page_2_l3 = Label(page_2, text='Please input the pictures that you want to check', font=('Bold', 20), borderwidth = 3, relief = "sunken")
+page_2_l3 = Label(page_2, text='Please input the pictures that you want to check', font=('Bold', 20), borderwidth = 3, relief =  SUNKEN)
 page_2_l3.pack()
 
 selection_tk_image = ImageTk.PhotoImage(selection_image)
 pic_photo2 = Label(page_2, image = selection_tk_image)
 pic_photo2.pack()
 
-#misc
-page_4 = Frame(main_frame)
-page_4_lb = Label(page_4, text='About', font=('Bold', 20))
-page_4_lb.pack()
+def stop_program():
+    sys.exit(0)
+    
+stop_button  = Button(page_3, text = "Finish", command = stop_program, bg="red", highlightbackground="red", highlightcolor="red", height=2, width=10, borderwidth = 3, relief  = RAISED)
+stop_button.pack()
 
-pages = [page_1, page_2, page_3, page_4]
+pages = [page_1, page_2, page_3]
 
 main_frame.pack(fill=BOTH, expand=True)
 
@@ -143,14 +145,14 @@ bottom_frame = Frame(root)
 back_btn = Button(bottom_frame, text='Back',
                      font=('Bold', 12),
                      bg='#1877f2', fg='blue', width=8,
-                     command=lambda: move_back_page(pages))
+                     command=lambda: back_page(pages))
 back_btn.pack(side=LEFT, padx=10)
 
 # creating the next button 
 next_btn = Button(bottom_frame, text='Next',
                      font=('Bold', 12),
                      bg='#1877f2', fg='blue', width=8,
-                     command=lambda: move_next_page(pages))
+                     command=lambda: next_page(pages))
 next_btn.pack(side=RIGHT, padx=10)
 
 bottom_frame.pack(side=BOTTOM, pady=10)
