@@ -1,3 +1,8 @@
 .stack-work/
 .secrets/*
+program/bin
+program/doc
+program/lib
+program/pkgdb
+program/share
 *~
