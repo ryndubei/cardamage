@@ -19,6 +19,8 @@ extra-source-files:
     README.md
     CHANGELOG.md
     program/main.py
+    "program/page 2.jpeg"
+    program/welcome_image.jpeg
 data-files:
     .secrets/API_KEY.secret
     partcost.csv
